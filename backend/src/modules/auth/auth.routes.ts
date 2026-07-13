@@ -7,6 +7,15 @@ import { env } from "../../config/env";
 
 export const authRouter = Router();
 
+const isProd = env.nodeEnv === "production";
+
+const authCookieOptions = {
+  httpOnly: true,
+  secure: isProd,
+  
+  sameSite: isProd ? ("none" as const) : ("lax" as const),
+};
+
 authRouter.post("/auth/login", async (req, res) => {
   const { email, password } = req.body as { email?: string; password?: string };
 
@@ -31,9 +40,7 @@ authRouter.post("/auth/login", async (req, res) => {
   const token = signAuthToken({ staffUserId: staffUser.id });
 
   res.cookie(AUTH_COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: env.nodeEnv === "production",
-    sameSite: "lax",
+    ...authCookieOptions,
     maxAge: 60 * 60 * 1000,
   });
 
@@ -41,6 +48,7 @@ authRouter.post("/auth/login", async (req, res) => {
 });
 
 authRouter.post("/auth/logout", (_req, res) => {
-  res.clearCookie(AUTH_COOKIE_NAME);
+ 
+  res.clearCookie(AUTH_COOKIE_NAME, authCookieOptions);
   res.json({ success: true });
 });
