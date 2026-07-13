@@ -16,6 +16,7 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "1h",
   frontendOrigin: required("FRONTEND_ORIGIN"),
   publicApiUrl: process.env.PUBLIC_API_URL ?? `http://localhost:${process.env.PORT ?? "4000"}`,
+  contactRecipientEmail: process.env.CONTACT_RECIPIENT_EMAIL ?? "",
   resendApiKey: process.env.RESEND_API_KEY ?? "",
   resendFromEmail: process.env.RESEND_FROM_EMAIL ?? "",
   unsubscribeTokenSecret: required("UNSUBSCRIBE_TOKEN_SECRET"),

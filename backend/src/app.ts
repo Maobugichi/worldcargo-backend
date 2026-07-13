@@ -5,6 +5,8 @@ import { allowedOrigins } from "./config/cors.config";
 import { authRouter } from "./modules/auth/auth.routes";
 import { shipmentsRouter } from "./modules/shipments/shipments.routes";
 import { errorHandler, notFoundHandler } from "./middleware/error-handler";
+import { contactRouter } from "./modules/contact/contact.routes";
+
 
 export const app = express();
 
@@ -23,6 +25,8 @@ app.get("/health", (_req, res) => {
 
 app.use(authRouter);
 app.use(shipmentsRouter);
+
+app.use(contactRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
