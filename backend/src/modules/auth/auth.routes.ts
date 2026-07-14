@@ -44,6 +44,8 @@ authRouter.post("/auth/login", async (req, res) => {
     maxAge: 60 * 60 * 1000,
   });
 
+  console.log("[login] cookie set for", staffUser.email, "origin:", req.headers.origin);
+
   res.json({ email: staffUser.email });
 });
 
