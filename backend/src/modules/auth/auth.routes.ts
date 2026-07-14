@@ -7,13 +7,10 @@ import { env } from "../../config/env";
 
 export const authRouter = Router();
 
-const isProd = env.nodeEnv === "production";
-
 const authCookieOptions = {
   httpOnly: true,
   secure: isProd,
-  
-  sameSite: isProd ? ("none" as const) : ("lax" as const),
+  sameSite: "lax" as const,
 };
 
 authRouter.post("/auth/login", async (req, res) => {
