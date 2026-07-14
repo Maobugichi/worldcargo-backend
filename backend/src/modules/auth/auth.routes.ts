@@ -7,6 +7,8 @@ import { env } from "../../config/env";
 
 export const authRouter = Router();
 
+const isProd = env.nodeEnv === "production";
+
 const authCookieOptions = {
   httpOnly: true,
   secure: isProd,
