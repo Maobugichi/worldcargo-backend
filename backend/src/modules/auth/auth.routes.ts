@@ -13,7 +13,7 @@ const authCookieOptions = {
   httpOnly: true,
   secure: true,
   sameSite: "lax" as const,
-  domain: ".worldcargo.org", // adjust to your actual root domain, leading dot shares across subdomains
+  domain: ".worldcargoexpress.org", 
 };
 
 authRouter.post("/auth/login", async (req, res) => {
