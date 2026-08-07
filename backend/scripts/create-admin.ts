@@ -1,4 +1,3 @@
-// scripts/create-admin.ts
 import { pool } from "../src/db/pool";
 import { hashPassword } from "../src/modules/auth/password.util";
 

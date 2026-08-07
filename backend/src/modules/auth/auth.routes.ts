@@ -11,8 +11,8 @@ const isProd = env.nodeEnv === "production";
 
 const authCookieOptions = {
   httpOnly: true,
-  secure: isProd,
-  sameSite: "lax" as const,
+  secure: true,
+  sameSite: "none" as const,
 };
 
 authRouter.post("/auth/login", async (req, res) => {
