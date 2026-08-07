@@ -12,7 +12,8 @@ const isProd = env.nodeEnv === "production";
 const authCookieOptions = {
   httpOnly: true,
   secure: true,
-  sameSite: "none" as const,
+  sameSite: "lax" as const,
+  domain: ".worldcargo.org", // adjust to your actual root domain, leading dot shares across subdomains
 };
 
 authRouter.post("/auth/login", async (req, res) => {
