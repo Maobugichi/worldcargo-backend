@@ -35,6 +35,10 @@ shipmentsRouter.get("/track/:trackingNumber", async (req, res) => {
     origin: shipment.origin,
     destination: shipment.destination,
     eta: shipment.eta,
+    contents: shipment.contents,
+    weight: shipment.weight,
+    weightUnit: shipment.weightUnit,
+    createdAt: shipment.createdAt,
     events: events.map((event) => ({
       status: event.status,
       location: event.location,
@@ -74,6 +78,9 @@ const createShipmentSchema = z.object({
   recipientName: z.string().optional(),
   recipientEmail: z.string().email().optional(),
   emailOptIn: z.boolean().optional(),
+  contents: z.string().min(1).optional(),
+  weight: z.number().positive().optional(),
+  weightUnit: z.string().min(1).optional(),
 });
 
 shipmentsRouter.post("/shipments", requireAuth, async (req, res) => {

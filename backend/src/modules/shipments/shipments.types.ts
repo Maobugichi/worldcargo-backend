@@ -20,6 +20,9 @@ export interface Shipment {
   recipientName: string | null;
   recipientEmail: string | null;
   emailOptIn: boolean;
+  contents: string | null;
+  weight: number | null;
+  weightUnit: string;
   createdAt: string;
   updatedAt: string;
 }

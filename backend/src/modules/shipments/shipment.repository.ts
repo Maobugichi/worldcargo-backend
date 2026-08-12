@@ -12,6 +12,9 @@ interface ShipmentRow {
   recipient_name: string | null;
   recipient_email: string | null;
   email_opt_in: boolean;
+  contents: string | null;
+  weight: string | null;
+  weight_unit: string;
   created_at: string;
   updated_at: string;
 }
@@ -39,6 +42,9 @@ function mapShipment(row: ShipmentRow): Shipment {
     recipientName: row.recipient_name,
     recipientEmail: row.recipient_email,
     emailOptIn: row.email_opt_in,
+    contents: row.contents,
+    weight: row.weight !== null ? parseFloat(row.weight) : null,
+    weightUnit: row.weight_unit,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -65,6 +71,9 @@ export interface CreateShipmentInput {
   recipientName?: string;
   recipientEmail?: string;
   emailOptIn?: boolean;
+  contents?: string;
+  weight?: number;
+  weightUnit?: string;
 }
 
 export async function createShipment(input: CreateShipmentInput): Promise<Shipment> {
@@ -76,8 +85,8 @@ export async function createShipment(input: CreateShipmentInput): Promise<Shipme
     try {
       const result = await pool.query<ShipmentRow>(
         `INSERT INTO shipments
-           (tracking_number, origin, destination, eta, recipient_name, recipient_email, email_opt_in)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)
+           (tracking_number, origin, destination, eta, recipient_name, recipient_email, email_opt_in, contents, weight, weight_unit)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, COALESCE($10, 'kg'))
          RETURNING *`,
         [
           trackingNumber,
@@ -87,6 +96,9 @@ export async function createShipment(input: CreateShipmentInput): Promise<Shipme
           input.recipientName ?? null,
           input.recipientEmail ?? null,
           input.emailOptIn ?? false,
+          input.contents ?? null,
+          input.weight ?? null,
+          input.weightUnit ?? null,
         ]
       );
       return mapShipment(result.rows[0]);
